@@ -1,24 +1,54 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { NavbarPage } from './Component/Navbar/Navbar';
+import { AddProduct } from './Component/addProduct/AddProduct';
+import { Provider } from 'react-redux';
+import { ShowProductList } from './Component/showProductList/ShowProductList';
+import { store } from './Redux/store';
+import { Details } from './Component/Details/Details';
+import { CartItem } from './Component/CartItems/CartItems';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <>
+              <NavbarPage/>
+              <ShowProductList/>
+              </>
+            } 
+          />
+          <Route
+            path='addproduct'
+            element={
+              <>
+                <NavbarPage/>
+                <AddProduct/>
+              </>
+            }
+          />
+          <Route path=':id'
+          element={<>
+          <Details/>
+          </>}/>
+          <Route path='/cartitem'
+          element={
+            <>
+            <NavbarPage/>
+            <CartItem/>
+            </>
+          }
+          />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+    </>
   );
 }
 

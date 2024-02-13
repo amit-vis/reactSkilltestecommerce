@@ -1,0 +1,15 @@
+.cart-img{
+    position: relative;
+}
+.cart-count{
+    background-color: rgb(47, 255, 0);
+    position: absolute;
+    right: .8%;
+    top: 10px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    border-radius: 50%;
+    color: rgb(185, 28, 28);
+    font-weight: 700;
+}
