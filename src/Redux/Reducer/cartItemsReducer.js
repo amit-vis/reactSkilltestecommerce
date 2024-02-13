@@ -1,51 +1,78 @@
+// imported all required data
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../ecommercedata/ecommerceStore";
 
+// create the initialState objects
 const initialState={
     cartData: []
 }
 
+// function for add the Item into data base
 export const addNewDataintoCart = createAsyncThunk('add/addtocart', async (newData)=>{
-    await addDoc(collection(db, "cartItem"),{
-        title: newData.title,
-        description: newData.description,
-        imgUrl: newData.imgUrl,
-        price: newData.price,
-        ratings: newData.ratings,
-        quantity:1
-    })
+    try {
+        await addDoc(collection(db, "cartItem"),{
+            title: newData.title,
+            description: newData.description,
+            imgUrl: newData.imgUrl,
+            price: newData.price,
+            ratings: newData.ratings,
+            quantity:1
+        })
+        
+    } catch (error) {
+        console.log("Error in adding the cart data into database", error);
+    }
 })
 
+// function for update the existing item into data base
 export const updateExisting= createAsyncThunk('update/updateCart', async (newData)=>{
-    const { price, quantity,id} = newData
-    const docRef = doc(db, 'cartItem', id)
-    return await updateDoc(docRef,{
+    try {
+        const { price, quantity,id} = newData
+        const docRef = doc(db, 'cartItem', id)
+        return await updateDoc(docRef,{
         price: price,
         quantity: quantity
     })
+        
+    } catch (error) {
+        console.log("Error in updating the cart data", error);
+    }
 })
 
+// function for delete the Item from data base
 export const deleteCartItem = createAsyncThunk('delete/deleteCart', async (id)=>{
-    const docRef = doc(db, "cartItem", id);
-    return await deleteDoc(docRef)
+    try {
+        const docRef = doc(db, "cartItem", id);
+        return await deleteDoc(docRef)
+        
+    } catch (error) {
+        console.log("Error in Deleting the cart data", error);
+    }
 })
 
+// function for fetch the data from data base
 export const fetchDataFromCart = createAsyncThunk('get/getcartData', async ()=>{
-    const cartCollection = collection(db, 'cartItem');
-    return new Promise((resolve, reject) => {
-        const unsubscribe = onSnapshot(cartCollection, (querySnapshot) => {
-            const data = querySnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            resolve(data);
-        }, (error) => {
-            reject(error);
+    try {
+        const cartCollection = collection(db, 'cartItem');
+        return new Promise((resolve, reject) => {
+            const unsubscribe = onSnapshot(cartCollection, (querySnapshot) => {
+                const data = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                resolve(data);
+            }, (error) => {
+                reject(error);
+            });
         });
-    });
+            
+    } catch (error) {
+        console.log("Error in fething the Cartdata", error);
+    }
 })
 
+// create the slice
 const cartItemSlice= createSlice({
     name: 'CartItem',
     initialState:initialState,
@@ -67,5 +94,6 @@ const cartItemSlice= createSlice({
     
 })
 
+// export the required data
 export const cartReducer = cartItemSlice.reducer;
 export const cartSelector = (state)=>state.cartReducer.cartData;

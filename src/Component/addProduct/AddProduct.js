@@ -22,16 +22,16 @@ export function AddProduct() {
         dispatch(fetchDataFromCart())
     },[dispatch])
 
-    const handleSubmitData = async (e)=>{
+    const handleSubmitData = (e)=>{
         e.preventDefault();
-        toast.success("Item Added successfully successfully!")
         if(itemText.description==="" || itemText.price===0 || 
         itemText.title===0 || itemText.ratings===0 || itemText.imgUrl===""){
             toast.error("Enter valid details!")
             return
 
         }
-        dispatch(addProductDataThunk(itemText))
+       dispatch(addProductDataThunk(itemText))
+       toast.success("Item Added successfully successfully!")
     }
     
     return (

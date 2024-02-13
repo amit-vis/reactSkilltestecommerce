@@ -1,3 +1,4 @@
+// imported all required data
 import './App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { NavbarPage } from './Component/Navbar/Navbar';
@@ -10,6 +11,7 @@ import { CartItem } from './Component/CartItems/CartItems';
 
 function App() {
 
+  // provide the route to the pages
   return (
     <>
     <Provider store={store}>
