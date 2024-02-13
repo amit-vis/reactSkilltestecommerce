@@ -5,10 +5,12 @@ import {  addProductDataThunk} from "../../Redux/Reducer/addProductReducer";
 import { fetchDataFromFirebase } from "../../Redux/Reducer/ShowProductReducer";
 import { fetchDataFromCart } from "../../Redux/Reducer/cartItemsReducer";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 export function AddProduct() {
     const dispatch = useDispatch();
+    const Navigate = useNavigate();
     const [itemText, setItemText] = useState({
         title: "", 
         description: "",
@@ -22,7 +24,7 @@ export function AddProduct() {
         dispatch(fetchDataFromCart())
     },[dispatch])
 
-    const handleSubmitData = (e)=>{
+    const handleSubmitData = async (e)=>{
         e.preventDefault();
         if(itemText.description==="" || itemText.price===0 || 
         itemText.title===0 || itemText.ratings===0 || itemText.imgUrl===""){
@@ -30,8 +32,9 @@ export function AddProduct() {
             return
 
         }
-       dispatch(addProductDataThunk(itemText))
+       await dispatch(addProductDataThunk(itemText))
        toast.success("Item Added successfully successfully!")
+       Navigate('/')
     }
     
     return (
