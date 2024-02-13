@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from '../../ecommercedata/ecommerceStore';
 import { addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 
+
 export const initialState = {
     productData: []
 };

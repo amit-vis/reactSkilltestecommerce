@@ -1,39 +1,45 @@
 import { useDispatch, useSelector } from "react-redux"
 import { deleteCartItem, fetchDataFromCart,updateExisting, cartSelector } from "../../Redux/Reducer/cartItemsReducer"
 import { useEffect } from "react";
-import { ListGroup, Image,Container, Button } from "react-bootstrap";
+import { ListGroup, Image,Container } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
+import './CartItems.css';
+import { toast, ToastContainer } from "react-toastify";
+
 
 export function CartItem() {
     const cartData = useSelector(cartSelector);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchDataFromCart())
-    }, [])
+    }, [dispatch])
 
     let handleIncrease = (item) => {
-        const updateQuantity = item.quantity + 1
-        const updatePrice = item.price+item.price/item.quantity
+        const updateQuantity = parseInt(item.quantity) + 1
+        const updatePrice = parseInt(item.price)+parseInt(item.price)/parseInt(item.quantity)
 
         dispatch(updateExisting({
             id: item.id,
             quantity: updateQuantity,
             price: updatePrice
         }))
+        toast.info("Item quntity updated!")
     };
 
     let handleDecrease = (item)=>{
-        const updateQuantity = item.quantity -1
-        const updatePrice = item.price - item.price / item.quantity;
+        const updateQuantity = parseInt(item.quantity)-1
+        const updatePrice = parseInt(item.price) - parseInt(item.price) / parseInt(item.quantity);
 
         if(updateQuantity=== 0){
-            dispatch(deleteCartItem(item.id))
+            dispatch(deleteCartItem(item.id));
+            toast.info("Item Romoved successfully!")
         }
         dispatch(updateExisting({
             id: item.id,
             quantity: updateQuantity,
             price: updatePrice
         }))
+        toast.info("Item quntity updated!")
     }
     
     return (
@@ -59,17 +65,22 @@ export function CartItem() {
                         </Container>
                         <Container>
                         <p className="item-para">{item.description}</p>
+                        <div className="quantity-container">
                         <Image src="https://cdn-icons-png.flaticon.com/128/753/753322.png" 
                         alt="sub" width={30}
                         onClick={()=>handleDecrease(item)}
                         />
+                        &nbsp;
                         <span>{item.quantity}</span>
+                        &nbsp;
                         <Image src="https://cdn-icons-png.flaticon.com/128/753/753317.png" alt="add" 
                         width={30} onClick={()=>handleIncrease(item)} />
+                        </div>
                         </Container>
                     </ListGroup.Item>
                 ))}
             </ListGroup>
+            <ToastContainer/>
         </>
     )
 }

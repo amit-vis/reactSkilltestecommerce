@@ -35,6 +35,7 @@ function App() {
           />
           <Route path=':id'
           element={<>
+          <NavbarPage/>
           <Details/>
           </>}/>
           <Route path='/cartitem'

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Container} from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {  addProductDataThunk} from "../../Redux/Reducer/addProductReducer";
 import { fetchDataFromFirebase } from "../../Redux/Reducer/ShowProductReducer";
+import { fetchDataFromCart } from "../../Redux/Reducer/cartItemsReducer";
+import { ToastContainer, toast } from "react-toastify";
 
 
 export function AddProduct() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [itemText, setItemText] = useState({
         title: "", 
         description: "",
@@ -19,13 +19,19 @@ export function AddProduct() {
 
     useEffect(()=>{
         dispatch(fetchDataFromFirebase())
+        dispatch(fetchDataFromCart())
     },[dispatch])
 
     const handleSubmitData = async (e)=>{
         e.preventDefault();
-        dispatch(addProductDataThunk(itemText))
+        toast.success("Item Added successfully successfully!")
+        if(itemText.description==="" || itemText.price===0 || 
+        itemText.title===0 || itemText.ratings===0 || itemText.imgUrl===""){
+            toast.error("Enter valid details!")
+            return
 
-        navigate('/')
+        }
+        dispatch(addProductDataThunk(itemText))
     }
     
     return (
@@ -85,6 +91,7 @@ export function AddProduct() {
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
+                <ToastContainer/>
             </Form>
             </Container>
         </>

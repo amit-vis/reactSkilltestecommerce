@@ -1,8 +1,9 @@
 .details-conatiner{
-    background-color: rgba(77, 34, 85, 0.603);
-    height: 600px;
+    background-color: rgba(67, 38, 62, 0.603);
+    width: 600px !important;
+    height: 650px;
     text-align: center;
     border-radius: 10px;
-    border: 2px solid blueviolet;
+    border: 2px solid rgb(20, 46, 175);
     font-family: cursive;
 }

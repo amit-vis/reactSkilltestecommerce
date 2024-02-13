@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDataFromFirebase, productSelector } from "../../Redux/Reducer/ShowProductReducer";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { addNewDataintoCart } from "../../Redux/Reducer/cartItemsReducer";
+import { addNewDataintoCart, fetchDataFromCart } from "../../Redux/Reducer/cartItemsReducer";
+import { ToastContainer, toast } from "react-toastify";
 
 
 export function Details(){
@@ -13,12 +14,14 @@ export function Details(){
   const {id} = useParams()
   useEffect(()=>{
     dispatch(fetchDataFromFirebase())
+    dispatch(fetchDataFromCart())
   },[dispatch])
 
   const findData = Items.find((item)=>item.id === id)
 
   const handleAddTocart = (addItems)=>{
     dispatch(addNewDataintoCart(addItems))
+    toast.success("Item Added into Cart successfully!")
   }
     
   if(!findData || findData.length===0){
@@ -28,10 +31,10 @@ export function Details(){
   }
     return(
         <>
-        <Container className="details-conatiner mt-2 w-50">
+        <Container className="details-conatiner mt-2 display-flex justify-content-center">
             <Image src={findData.imgUrl} alt="details-img" 
-            width={400} height={200} className="details-img mt-2" rounded/>
-        <Table striped bordered hover className="mt-3">
+            width={300} height={200} className="details-img mt-2" rounded/>
+        <Table striped bordered hover className="mt-2 w-75 m-auto">
       <thead>
         <tr>
           <th colSpan="2">Item Details</th>
@@ -66,7 +69,7 @@ export function Details(){
       </tbody>
     </Table>
         </Container>
-        
+        <ToastContainer/>
         </>
     )
 }

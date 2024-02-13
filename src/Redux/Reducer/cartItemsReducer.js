@@ -61,7 +61,7 @@ const cartItemSlice= createSlice({
       
         })
         .addCase(deleteCartItem.fulfilled, (state, action)=>{
-            state.cartData = state.cartData.filter((item)=>item.id!==action.meta.arg)
+            state.cartData = state.cartData.filter((item)=>item.id!==action.meta.arg);
         })
     }
     

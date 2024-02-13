@@ -1,0 +1,20 @@
+.Item-title{
+    position: absolute;
+    top: 25%;
+    left: 16%;
+}
+.Item-price{
+    position: absolute;
+    top: 45%;
+    left: 16%;
+}
+.star-container{
+    position: absolute;
+    top: 70%;
+    left: 16%;
+}
+.quantity-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5%;
+}

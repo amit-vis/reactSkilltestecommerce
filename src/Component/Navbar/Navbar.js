@@ -1,10 +1,10 @@
-import { Nav, Navbar, Container } from "react-bootstrap";
+import { Nav, Container, Navbar } from "react-bootstrap";
 import './Navbar.css'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { cartSelector } from "../../Redux/Reducer/cartItemsReducer";
 
 export function NavbarPage() {
-  const count = useSelector(cartSelector)
+  const count = useSelector(cartSelector);
 
   return (
     <>
@@ -20,11 +20,14 @@ export function NavbarPage() {
             >
                 <Nav.Link href="/">Product List</Nav.Link>
                 <Nav.Link href="/addproduct">Add Product &nbsp;
-                  <img src="https://cdn-icons-png.flaticon.com/128/8371/8371357.png" alt="Add Icon" width={20} height={20} />
+                    <img src="https://cdn-icons-png.flaticon.com/128/8371/8371357.png" 
+                  alt="Add Icon" width={20} height={20} />
                 </Nav.Link>
             </Nav>
               <Nav.Link className="cart-container" href="/cartitem">
-                <img className="cart-img" src="https://cdn-icons-png.flaticon.com/128/726/726496.png" alt="cart Icon" width={50} height={50} />
+                <img className="cart-img" 
+                src="https://cdn-icons-png.flaticon.com/128/726/726496.png" 
+                alt="cart Icon" width={50} height={50} />
                 <span className="cart-count">{count.length}</span>
               </Nav.Link>
           </Navbar.Collapse>
